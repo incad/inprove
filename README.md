@@ -1,7 +1,7 @@
-##help
+## help
 ng serve --proxy-config proxy.conf.json --host 192.168.0.103
 
-##sass conf
+## sass conf
 #00bfa5 - green -> logo, links, magnify  
 #546e7a - blue gray 1 -> navbar, count font color   
 #78909c - blue gray 2 -> desc under logo on home page, facets content, pagination  
