@@ -1,0 +1,51 @@
+// --- CZBRD ITEM ---
+
+app-czbrd-item {
+  .mat-card {
+    .mat-card-subtitle {
+      margin-bottom: 0;
+    }
+
+    .mat-card-actions {
+      .mat-expansion-panel-header {
+        .mat-content {
+          flex: none;
+
+          .mat-expansion-panel-header-title {
+            margin-right: $app-gap-icon;
+          }
+        }
+
+        .mat-expansion-indicator {
+          &:after {
+            color: $app-primary-color;
+          }
+        }
+      }
+      
+      .mat-expansion-panel-header-title,
+      .mat-expansion-panel-content {
+        span {
+          background-color: $app-gray-3;
+          color: $app-gray-8;
+          font-size: 12px;
+          font-weight: normal;
+          border-radius: $app-border-radius;
+          margin-right: $app-gap-icon;
+          padding: 0 6px;
+          max-height: 20px;
+          line-height: 20px;
+          display: inline-block;
+        }
+      }
+
+      .mat-expansion-panel-content {
+        .mat-expansion-panel-body {
+          & > div {
+            margin-top: $app-gap-icon;
+          }
+        }
+      }
+    }
+  }
+}

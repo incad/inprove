@@ -1,0 +1,11 @@
+// --- DPZ ITEM ---
+
+app-dpz-item {
+  & > .mat-card {
+    & > .mat-card-content {
+      & > .mat-accordion {
+        @extend .app-clean-mg;
+      }
+    }
+  }
+}

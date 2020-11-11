@@ -1,0 +1,44 @@
+{
+  "responseHeader":{
+    "status":0,
+    "QTime":46,
+    "params":{
+      "facet.field":["{!ex=zdr}zdroj",
+        "nabidka",
+        "bohemika",
+        "status",
+        "pocet_exemplaru"],
+      "json.nl":"arrntv",
+      "fl":"*,ex:[json],author:[json]",
+      "start":"0",
+      "q.op":"AND",
+      "sort":"_version_ desc",
+      "fq":"-leader_format:s",
+      "rows":"40",
+      "version":"2.2",
+      "q":"*:*",
+      "stats":"true",
+      "facet.mincount":"1",
+      "facet":"true",
+      "wt":"json",
+      "stats.field":"rokvydani"}},
+  "response":{"numFound":0,"start":0,"docs":[]
+  },
+  "facet_counts":{
+    "facet_queries":{},
+    "facet_fields":{},
+    "facet_ranges":{},
+    "facet_intervals":{},
+    "facet_heatmaps":{}},
+  "stats":{
+    "stats_fields":{
+      "rokvydani":{
+        "min":1394.0,
+        "max":2015.0,
+        "count":54457,
+        "missing":14827,
+        "sum":1.05482336E8,
+        "sumOfSquares":2.04886644068E11,
+        "mean":1936.9839690030667,
+        "stddev":102.22389628022007}}}}
+

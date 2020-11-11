@@ -1,0 +1,68 @@
+{
+  "context": "",
+  "defaultLang": "cs",
+  "sorts": {
+    "vdk": [],
+    "rdcz": [
+      {
+        "label": "relevance",
+        "field": "score desc",
+        "dir": "desc"
+      },
+      {
+        "label": "abecedy",
+        "field": "titlesort asc",
+        "dir": "asc"
+      }
+    ],
+    "czbrd": [
+      {
+        "label": "pH sestupně",
+        "field": "desc",
+        "dir": "desc"
+      },
+      {
+        "label": "pH vzestupně",
+        "field": "asc",
+        "dir": "asc"
+      }
+    ]
+  },
+  "selRows": [
+    10,
+    20,
+    50
+  ],
+  "defaultRows": 20,
+  "vdkAPI": "http://195.113.132.165:8080/vdk/api",
+  "sources": [
+    {
+      "label": "vdk",
+      "url": "http://vdk.nkp.cz/vdk/",
+      "searchable": true
+    },
+    {
+      "label": "rdcz",
+      "url": "http://registrdigitalizace.cz",
+      "searchable": true
+    },
+    {
+      "label": "czbrd",
+      "url": "http://odkyselovani.nkp.cz/",
+      "searchable": true
+    },
+    {
+      "label": "dpz",
+      "url": "http://195.113.132.51:8080/razitka",
+      "searchable": true
+    },
+    {
+      "label": "ep",
+      "url": "http://195.113.132.165:8080/permonik",
+      "searchable": false
+    }
+  ],
+  "urlFields": [
+    "f_organizace"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "rdczBase": "http://registrdigitalizace.cz/rdcz/search/",
+  "vdkBase" : "http://195.113.132.165:8080/vdk/api/search/query?",
+  "vdkBase2" : "http://localhost:8080/vdk/api/search/query?",
+  "vdkBase1" : "http://vdk.nkp.cz/vdk/search?action=BYQUERY&",
+  "czbrdBase" : "http://odkyselovani.nkp.cz/search.vm?",
+  "dpzBase" : "http://localhost:8983/solr/razitka/select?"
+}
+

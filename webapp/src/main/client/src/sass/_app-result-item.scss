@@ -1,0 +1,77 @@
+// --- RESULT ITEM ---
+
+app-result-item {
+  display: block;
+  margin-bottom: $app-gap;
+  
+  & > .mat-card {
+    position: relative;
+    
+    & > .mat-card-header {
+      .mat-card-header-text {
+        .mat-card-title {
+          scroll-margin-bottom: $app-gap;
+
+          .mat-icon-button {
+            vertical-align: top;
+          }
+        }
+      }
+    }
+
+    & > .mat-card-content {
+      & > .mat-accordion {
+        & > .mat-expansion-panel {
+          margin-bottom: 2px;
+  
+          &.mat-expansion-panel-spacing {
+            @extend .app-clean-mg;
+          }
+  
+          & > .mat-expansion-panel-header {
+            background-color: $app-gray-1;
+  
+            .mat-content {
+              flex: none;
+  
+              .mat-expansion-panel-header-title {
+                .app-count {
+                  font-weight: normal;
+                  color: $app-gray-5;
+                  margin-left: $app-gap-icon;
+                }
+              }
+            }
+          }
+
+          & > .mat-expansion-panel-content {
+            & > .mat-expansion-panel-body {
+              padding-top: $app-gap;
+              padding-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+
+    // inner items
+    .app-inner-item {
+      &:not(:last-child) {
+        .mat-card {
+          border-bottom: 1px solid $app-gray-3;
+        }
+      }
+
+      &:last-child {
+        .mat-card {
+          padding-bottom: 0;
+        }
+      }
+
+      .mat-card {
+        padding: 0 0 16px 0;
+        @extend .app-clean-shadow;
+      }
+    }
+  }
+}

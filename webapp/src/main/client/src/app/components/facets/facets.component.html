@@ -1,0 +1,53 @@
+<mat-accordion multi="true">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header expandedHeight="48px">
+      <mat-panel-title>
+        {{ 'fields.zdroj' | translate }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-list role="list">
+      <ng-container *ngFor="let source of config.sources">
+      <mat-list-item *ngIf="source.searchable" [class.active]="state.source === source.label">
+        <div>
+          <mat-icon [ngClass]="'app-source-' + source.label">turned_in</mat-icon>
+          <mat-checkbox [(ngModel)]="state.sources[source.label]"></mat-checkbox>
+          <a (click)="setSource(source.label)">
+            {{ source.label + '.name' | translate }}
+          </a>
+          <span>({{ state.totals[source.label]}})</span> 
+        </div>    
+      </mat-list-item>
+      </ng-container>
+    </mat-list>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion multi="true">
+  <ng-container *ngFor="let facetField of state.facets">
+    <mat-expansion-panel *ngIf="facetField.values.length > 1" [expanded]="true">
+      <mat-expansion-panel-header expandedHeight="48px">
+        <mat-panel-title>
+          {{ 'fields.' + facetField.field | translate }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list role="list">
+        <ng-container *ngFor="let facet of facetField.values">
+        <mat-list-item *ngIf="facet.count > 0">
+          <div>
+            <a (click)="clickFacet(facetField.field, facet)">
+              <ng-container [ngSwitch]="facet.value">
+                <ng-container *ngSwitchCase="'finished'">{{ 'fields.' + facet.value | translate }}</ng-container>
+                <ng-container *ngSwitchCase="'progress'">{{ 'fields.' + facet.value | translate }}</ng-container>
+                <ng-container *ngSwitchCase="'planovane'">{{ 'fields.' + facet.value | translate }}</ng-container>
+                <ng-container *ngSwitchCase="'null'">{{ 'fields.' + facet.value | translate }}</ng-container>
+                <ng-container *ngSwitchDefault>{{ facet.value }}</ng-container>
+              </ng-container>
+            </a>
+            <span>({{facet.count}})</span> 
+          </div>    
+        </mat-list-item>
+      </ng-container>
+      </mat-list>
+    </mat-expansion-panel>
+  </ng-container>
+</mat-accordion>

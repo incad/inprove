@@ -1,0 +1,79 @@
+<mat-card>
+  <div class="app-sources" *ngIf="state.source === 'czbrd'">
+    <div class="app-source app-source-czbrd"></div>
+    <div class="app-source app-source-vdk" *ngIf="vdkDocs?.length > 0"></div>
+    <div class="app-source app-source-rdcz" *ngIf="rdczDocs?.length > 0"></div>
+    <div class="app-source app-source-dpz" *ngIf="dpzDocs?.length > 0"></div>
+  </div>
+  <mat-card-header>
+    <mat-card-title *ngIf="state.source === 'czbrd'">
+      <a [href]="'http://odkyselovani.nkp.cz/?q=id:' + doc.id" target="_blank" >{{ doc.ex_BIBNAZEV }}</a> 
+      <ng-container *ngIf="!doc.ex_BIBNAZEV">{{ 'desc.no_title' | translate }}</ng-container>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutGap="16px" class="app-row-gap-16">
+      <div class="app-thumb" *ngIf="hasImg">
+        <a [href]="" target="_blank" [matTooltip]="'desc.display_source_image' | translate">
+          <img [src]="imgSrc" />  
+        </a>
+      </div>
+      <div fxFlex class="app-metadata">
+        <div *ngIf="doc.ex_BIBCARKOD">{{ 'fields.carkod' | translate }}: <strong>{{ doc.ex_BIBCARKOD }}</strong></div>
+        <div *ngIf="doc.ex_BIBSIGNATURA">{{ 'fields.signatura' | translate }}: <strong>{{ doc.ex_BIBSIGNATURA }}</strong></div>
+        <div *ngIf="doc.ex_BIBAUTOR">{{ 'fields.autor' | translate }}: <strong>{{ doc.ex_BIBAUTOR }}</strong></div>
+        <div *ngIf="doc.rokvydani">{{ 'fields.rok' | translate }}: <strong>{{ doc.rokvydani }}</strong></div>
+        <div *ngIf="doc.ex_BIBCNB">{{ 'fields.ccnb' | translate }}: <strong>{{ doc.ex_BIBCNB }}</strong></div>
+        <div *ngIf="doc.ex_BIBSIGLA">{{ 'fields.vlastnik' | translate }}: <strong>{{ doc.ex_BIBSIGLA }}</strong></div>
+      </div>
+    </div>
+    <mat-accordion multi="true" *ngIf="vdkDocs?.length > 0 || rdczDocs?.length > 0 || dpzDocs?.length > 0 ">
+      <mat-expansion-panel *ngIf="state.sources.vdk && vdkDocs?.length > 0" [expanded]="true" class="mat-elevation-z0">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            {{ 'vdk.name' | translate }}<span class="app-count"> ({{vdkDocs?.length}})</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-vdk-item *ngFor="let vdk of vdkDocs" [doc]="vdk" class="app-inner-item"></app-vdk-item>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="rdczDocs?.length > 0 && state.sources.rdcz" [expanded]="true" class="mat-elevation-z0">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            {{ 'rdcz.name' | translate }}<span class="app-count">({{ rdczDocs?.length }})</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-rdcz-item *ngFor="let rdcz of rdczDocs" [doc]="rdcz" (imageFound)="onImageFound($event)" class="app-inner-item"></app-rdcz-item>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="dpzDocs?.length > 0 && state.sources.dpz" [expanded]="true" class="mat-elevation-z0">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            {{ 'dpz.name' | translate }}<span class="app-count">({{ dpzDocs?.length }})</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-dpz-item *ngFor="let dpz of dpzDocs" [doc]="dpz" class="app-inner-item"></app-dpz-item>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+  <mat-card-actions>
+    <mat-accordion>
+      <mat-expansion-panel [disabled]="doc.mer_DRUHZASAHU?.length === 1" class="app-clean-panel mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span *ngIf="doc.mer_akt_RECCREDATE">{{ doc.mer_akt_RECCREDATE | date : 'dd.MM.yyyy' }}</span>
+            <span *ngIf="doc.mer_akt_DRUHZASAHU_human">{{ doc.mer_akt_DRUHZASAHU_human }}</span>
+            <span *ngIf="doc.mer_akt_POSVAZBA_human">{{ doc.mer_akt_POSVAZBA_human }}</span>
+            <span *ngIf="doc.mer_akt_KBLOKPH">ph {{ doc.mer_akt_KBLOKPH }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let druh of doc.mer_DRUHZASAHU; let idx = index;">
+          <ng-container *ngIf="idx != 0">
+            <span *ngIf="doc.mer_RECCREDATE[idx]">{{ doc.mer_RECCREDATE[idx] | date : 'dd.MM.yyyy' }}</span>
+            <span *ngIf="doc.mer_DRUHZASAHU_human[idx]">{{ doc.mer_DRUHZASAHU_human[idx] }}</span>
+            <span *ngIf="doc.mer_POSVAZBA_human[idx]">{{ doc.mer_POSVAZBA_human[idx] }}</span>
+            <span *ngIf="doc.mer_KBLOKPH[idx]">ph {{ doc.mer_KBLOKPH[idx] }}</span>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-actions>
+</mat-card>

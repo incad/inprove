@@ -1,0 +1,11 @@
+// --- RESULTS ---
+
+app-results {
+  .app-right {
+    @import "./app-result-item";
+    @import "./app-vdk-item";
+    @import "./app-rdcz-item";
+    @import "./app-czbrd-item";
+    @import "./app-dpz-item";
+  }
+}

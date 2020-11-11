@@ -1,0 +1,17 @@
+// --- RDCZ ITEM ---
+
+app-rdcz-item {
+  & > .mat-card {
+    & > .mat-card-content {
+      & > .mat-accordion {
+        & > .mat-expansion-panel {
+          &:last-child {
+            &.mat-expanded {
+              margin-bottom: -16px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

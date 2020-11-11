@@ -1,0 +1,97 @@
+// --- FACETS ---
+
+.app-facets {
+  @import "./app-facets-used";
+  
+  .mat-expansion-panel {
+    @extend .mat-elevation-z0, .app-clean-mg, .app-clean-radius, .app-clean-bg;
+    @include set-border(bottom, 1, solid, #{$app-gray-3});
+
+    &.app-users {
+      &.mat-expanded {
+        padding-bottom: $app-gap;
+      }
+
+      .mat-expansion-panel-header {
+        .app-count {
+          font-weight: normal;
+          color: $app-gray-5;
+        }
+      }
+
+      .mat-expansion-panel-content {
+        height: 200px;
+        overflow-y: auto;
+
+        .mat-expansion-panel-body {
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .mat-list {
+    @extend .app-clean-pd;
+
+    a {
+      color: inherit;
+    }
+
+    &:not(.app-list-used-facet) {
+      .mat-list-item {
+        @include setSourceColor(facet);
+        height: auto;
+        line-height: 22px;
+        
+        .mat-list-item-content {
+          @extend .app-clean-pd;
+
+          span {
+            &:not(.app-for-approval) {
+              color: $app-gray-5;
+              font-size: 14px;
+              margin-left: calc(#{$app-gap} / 2);  
+            }
+          }
+
+          .app-for-approval {
+            color: $app-accent-color;
+            font-size: 14px;
+            font-weight: normal;
+          }
+
+          .app-external {
+            @extend .app-gap-icon-left;
+            color: $app-accent-color;
+          }
+
+          .app-checked {
+            color: $app-primary-color !important;
+          }
+        
+          .app-excluded {
+            color: $app-color-warning !important;
+          }
+        } 
+
+        .app-display-table {
+          line-height: 22px;
+          display: table;
+          width: 100%;
+  
+          a {
+            display: table-cell;
+            width: 90%;
+          }
+  
+          .app-facet-item {
+            display: table-cell;
+          }
+        }
+      }
+      
+    }
+
+    @extend .app-list-view-facet;
+  }
+}

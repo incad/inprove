@@ -1,0 +1,63 @@
+<div class="app-loading" *ngIf="loading">
+  <div class="app-table-cell app-clean-pd">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</div>
+
+<div class="app-display-table app-container">
+  <div class="app-table-cell app-left">
+    <div fxLayout="row" fxFlexFill>
+      <div fxFlex class="app-facets">
+        <app-facets-used></app-facets-used>
+        <app-facets></app-facets>
+      </div>
+    </div>
+  </div>
+  <div class="app-table-cell app-right">
+    <ng-container *ngIf="!loading">
+      <div fxLayout="row" fxLayoutGap="16px">
+        <div fxFlex="0 0 30px" fxFlexAlign="center">
+          <a (click)="showChart()" [matTooltip]="isChartVisible ? ('desc.hide_chart_bar' | translate) : ('desc.show_chart_bar' | translate)" *ngIf="state.facet_ranges">
+            <mat-icon>bar_chart</mat-icon>
+          </a>
+        </div>
+        <div fxFlex="0 0 160px">
+          <mat-form-field class="app-full-width app-sort-field" *ngIf="config.sorts[state.source]?.length > 0">
+            <mat-select [(ngModel)]="state.sort" (selectionChange)="setSort($event)">
+              <mat-option [value]="state.countsSort">{{ 'desc.sort_by' | translate }} {{ 'desc.sort_by_count' | translate }}</mat-option>
+              <mat-option *ngFor="let sort of config.sorts[state.source]" [value]="sort">{{ 'desc.sort_by' | translate }} {{ 'desc.' + sort.label | translate }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="0 0 calc(100% - 222px)">
+          <app-paginator></app-paginator>
+        </div>
+      </div>
+      <div fxLayout="row" *ngIf="state.facet_ranges && isChartVisible" class="app-row-gap-16">
+        <app-chart-bar [height]="'120px'" [width]="'860px'" [showTotal]="false"></app-chart-bar>
+      </div>
+      <div fxLayout="row">
+        <div fxFlex>
+          <ng-container [ngSwitch]="state.source" *ngFor="let result of results; let idx = index">
+            <app-result-item *ngSwitchCase="'vdk'" [doc]="result" [idx]="idx"></app-result-item>
+            <app-rdcz-item *ngSwitchCase="'rdcz'" [doc]="result"></app-rdcz-item>
+            <app-czbrd-item *ngSwitchCase="'czbrd'" [doc]="result"></app-czbrd-item>
+            <app-dpz-item *ngSwitchCase="'dpz'" [doc]="result"></app-dpz-item>
+          </ng-container>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="16px">
+        <div fxFlex="0 0 250px">
+          <mat-form-field class="app-full-width app-sort-field" *ngIf="config.sorts[state.source]?.length > 0">
+            <mat-select [(ngModel)]="state.sort" (selectionChange)="setSort($event)">
+              <mat-option *ngFor="let sort of config.sorts[state.source]" [value]="sort">{{ 'desc.sort_by' | translate }} {{ 'desc.' + sort.label | translate }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="0 0 calc(100% - 266px)">
+          <app-paginator></app-paginator>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

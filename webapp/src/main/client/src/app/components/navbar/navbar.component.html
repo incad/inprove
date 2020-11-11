@@ -1,0 +1,19 @@
+<mat-toolbar class="app-navbar" color="primary">
+  <div class="app-container">
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div fxFlex class="app-fx-left">
+        <div fxLayout="row">
+          <a routerLink="/" class="app-logo" fxFlexAlign="center">
+            <img src="assets/img/logo-inprove.png" alt="Inprove" />
+          </a>
+          <app-searchbar fxFlex></app-searchbar>
+        </div>
+      </div>
+      <div fxFlex class="app-fx-right">
+        <a routerLink="home" routerLinkActive="app-active" title="Home"><mat-icon>home</mat-icon> Home</a>
+        <!-- <a routerLink="results" routerLinkActive="app-active" title="Search">Search</a> -->
+        <!-- <a (click)="changeLang()" class="app-link">{{ currLang }}</a> -->
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,21 @@
+<mat-list role="list" class="app-list-used-facet" *ngIf="state.usedFilters && state.usedFilters.length > 0">
+  <h3 mat-subheader fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start end" class="app-primary">
+    <div fxFlex>{{ 'desc.active_filters' | translate }}</div>
+    <div>
+      <a [matTooltip]="'desc.remove_all_filters' | translate" matTooltipPosition="above" (click)="clean()">
+        <mat-icon>close</mat-icon>
+      </a>
+    </div>
+  </h3>
+  <mat-list-item role="listitem" *ngFor="let filter of state.usedFilters">
+    <div class="app-display-table">
+      <a [matTooltip]="'desc.remove_this_filter' | translate" matTooltipPosition="above" (click)="removeFacet(filter)">
+        <mat-icon>close</mat-icon>
+      </a>
+      <span class="app-facet-name">
+        <!-- {{ 'fields.' + filter.field | translate}}:&#160; -->
+        <span class="app-font-bold">{{ filter.value }}</span> 
+      </span> 
+    </div>
+  </mat-list-item>
+</mat-list>

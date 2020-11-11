@@ -1,0 +1,37 @@
+// --- SEARCHBAR ---
+
+app-searchbar {
+  .app-searchbar-container {
+    background-color: $app-searchbar-bg;
+    border-radius: $app-border-radius;
+    height: $app-searchbar-height;
+    color: $app-searchbar-color;
+    max-width: $app-searchbar-max-width;
+    display: flex;
+    align-items: center;
+
+    &:focus-within {
+      box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+    }
+
+    .mat-icon {
+      margin-left: $app-searchbar-icon-gap;
+      margin-right: $app-searchbar-icon-gap;
+
+      &.app-icon-clear {
+        margin-right: 0 !important;
+      }
+    }
+
+    input {
+      @extend .app-clean-border, .app-clean-pd, .app-clean-bg;
+      width: calc(100% - 90px);
+      height: 100%;
+      font-size: $app-searchbar-font-size;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

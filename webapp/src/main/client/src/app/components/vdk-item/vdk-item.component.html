@@ -1,0 +1,99 @@
+<mat-card *ngIf="state.sources.vdk">
+  <mat-card-header>
+    <mat-card-title *ngIf="state.source === 'dpz'">
+      <ng-container *ngIf="doc.titlemd5">{{doc.titlemd5[0]}}</ng-container>
+      <ng-container *ngIf="!doc.titlemd5">{{'NOTITLE' | translate}} {{doc.code}}</ng-container>   
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="state.source === 'vedeka'">
+      <div *ngIf="doc.author && doc.author[0]">
+        <span *ngFor="let a of doc.author[0]">{{a}}; </span>
+        <button mat-icon-button *ngIf="hasDifferences('author')" #wAuthor (click)="openPop('author', wAuthor, infoPopup)" [matTooltip]="('desc.differences_in' | translate) + ' ' + ('desc.in_author' | translate)" [disableRipple]="true">
+          <mat-icon fontSet="material-icons-outlined">info</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="doc.vydavatel">
+        <span>{{'desc.publisher' | translate}}: {{doc.vydavatel[0]}}</span>
+        <button mat-icon-button *ngIf="hasDifferences('vydavatel')" #wVydavatel (click)="openPop('vydavatel', wVydavatel, infoPopup)" [matTooltip]="('desc.differences_in_e' | translate) + ' ' + ('desc.in_vydavatel' | translate)" [disableRipple]="true">
+          <mat-icon fontSet="material-icons-outlined">info</mat-icon>
+        </button>
+      </div>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="app-mat-table-container">
+      <table mat-table [dataSource]="exemplars">
+        <ng-container matColumnDef="zdroj">
+          <th mat-header-cell *matHeaderCellDef>{{ 'fields.zdroj' | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="hasIcon(element.zdroj)" class="app-logo">
+              <img matTooltip="{{ element.zdroj }}" src="{{ 'assets/img/zdroj/' + element.zdroj + '.png' }}" title="" />
+            </span>
+            <span *ngIf="!hasIcon(element.zdroj)" class="app-logo app-no-logo">{{ element.zdroj }}</span>
+            <button mat-icon-button (click)="toggleZdroj(element.zdroj)" matTooltip="{{ 'desc.filter_source' | translate }}" [disableRipple]="true">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+            <button mat-icon-button (click)="openLink(element.id)" matTooltip="{{ 'desc.view_original_metadata' | translate }}" [disableRipple]="true">
+              <mat-icon>open_in_new</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="signatura">
+          <th mat-header-cell *matHeaderCellDef>{{ 'fields.signatura' | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.signatura }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>{{ 'fields.status' | translate }}</th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'app-status-' + element.status">
+            <ng-container *ngIf="element.status">
+              <button mat-icon-button (click)="toggleStatus(element.status)" matTooltip="{{ 'desc.filter_source' | translate }}" [disableRipple]="true">
+                <mat-icon>filter_list</mat-icon>
+              </button>
+              {{ 'status.' + element.status | translate }}
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dilciKnih">
+          <th mat-header-cell *matHeaderCellDef>{{ 'fields.dilciKnih' | translate }}</th>
+          <td mat-cell *matCellDef="let element"> {{element.dilciKnih}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rocnik_svazek">
+          <th mat-header-cell *matHeaderCellDef>{{ 'fields.rocnik_svazek' | translate }}</th>
+          <td mat-cell *matCellDef="let element"> {{element.rocnik_svazek}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cislo">
+          <th mat-header-cell *matHeaderCellDef>{{ 'fields.cislo' | translate }}</th>
+          <td mat-cell *matCellDef="let element"> {{element.cislo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rok">
+          <th mat-header-cell *matHeaderCellDef>{{ 'fields.rok' | translate }}</th>
+          <td mat-cell *matCellDef="let element"> {{ element.rok }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row [ngClass]="{'app-even': index%2 == 1}"
+          *matRowDef="let row; columns: displayedColumns; let index = index" [hidden]="isRowHidden(row)"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #infoPopup>
+  <mat-card class="app-popover-card">
+    <mat-card-header>
+      <mat-card-title>
+        <ng-container *ngIf="tooltip.field !== 'vydavatel'">{{ 'desc.differences_in' | translate }}</ng-container>
+        <ng-container *ngIf="tooltip.field === 'vydavatel'">{{ 'desc.differences_in_e' | translate }}</ng-container>  
+        {{ 'desc.in_' + tooltip.field | translate }}:
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-subtitle>
+      <div [innerHtml]="tooltip.text"></div>
+    </mat-card-subtitle>
+  </mat-card>
+</ng-template>

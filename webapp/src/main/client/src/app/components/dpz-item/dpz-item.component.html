@@ -1,0 +1,60 @@
+<mat-card>
+  <div class="app-sources" *ngIf="state.source === 'dpz'">
+    <div class="app-source app-source-dpz"></div>
+    <div class="app-source app-source-vdk" *ngIf="vdkDocs?.length > 0"></div>
+    <div class="app-source app-source-rdcz" *ngIf="rdczDocs?.length > 0"></div>
+    <div class="app-source app-source-czbrd" *ngIf="czbrdDocs?.length > 0"></div>
+  </div>
+  <mat-card-header>
+    <mat-card-title *ngIf="state.source === 'dpz'">
+      <a [href]="'http://195.113.132.51:8080/razitka/#display/GuestView:Exemplar_guest/' + doc.id" target="_blank"  [matTooltip]="'desc.display_source_image' | translate">
+        <mat-icon>launch</mat-icon>{{ doc.napis }}
+      </a>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutGap="16px" class="app-row-gap-16">
+      <div class="app-thumb">
+        <a [href]="'http://195.113.132.51:8080/razitka/#display/GuestView:Exemplar_guest/' + doc.id" target="_blank" [matTooltip]="'desc.display_source_image' | translate">
+          <img [src]="setThumbUrl(doc.id)" />  
+        </a>
+      </div>
+      <div fxFlex class="app-metadata">
+        <div *ngIf="doc.signatura">{{ 'fields.signatura' | translate }}: <strong *ngFor="let sig of doc.signatura">{{ sig }}</strong></div>
+        <div *ngIf="doc.sys">{{ 'fields.sys' | translate }}: <strong *ngFor="let sys of doc.sys">{{ sys }}</strong></div>
+        <div *ngIf="doc.druh">{{ 'fields.druh' | translate }}: <strong>{{ doc.druh }}</strong></div>
+        <div *ngIf="doc.osoba">{{ 'fields.osoba' | translate }}: <strong>{{ doc.osoba }}</strong></div>
+        <div *ngIf="doc.instituce">{{ 'fields.instituce' | translate }}: <strong>{{ doc.instituce }}</strong></div>
+        <div *ngIf="doc.obecne">{{ 'fields.obecne' | translate }}: <strong>{{ doc.obecne }}</strong></div>
+        <div *ngIf="doc.mesto">{{ 'fields.mesto' | translate }}: <strong>{{ doc.mesto }}</strong></div>
+        <div *ngIf="doc.vlastnik">{{ 'fields.vlastnik' | translate }}: <strong>{{ doc.vlastnik }}</strong></div>
+      </div>
+    </div>
+    <mat-accordion multi="true">
+      <mat-expansion-panel *ngIf="state.sources.vdk && vdkDocs?.length > 0" [expanded]="false" class="mat-elevation-z0">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            {{ 'vdk.name' | translate }}<span class="app-count"> ({{vdkDocs?.length}})</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-vdk-item *ngFor="let vdk of vdkDocs" [doc]="vdk" class="app-inner-item"></app-vdk-item>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="rdczDocs?.length > 0 && state.sources.rdcz" [expanded]="false" class="mat-elevation-z0">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            {{ 'rdcz.name' | translate }}<span class="app-count">({{ rdczDocs?.length }})</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-dpz-item *ngFor="let rdcz of rdczDocs" [doc]="rdcz" class="app-inner-item"></app-dpz-item>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="czbrdDocs?.length > 0 && state.sources.czbrd" [expanded]="false" class="mat-elevation-z0">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            {{ 'czbrd.name' | translate }}<span class="app-count">({{ czbrdDocs?.length }})</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-czbrd-item *ngFor="let czbrd of czbrdDocs" [doc]="czbrd" class="app-inner-item"></app-czbrd-item>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+</mat-card>

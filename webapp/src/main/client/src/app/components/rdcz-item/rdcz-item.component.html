@@ -1,0 +1,125 @@
+<mat-card>
+  <div class="app-sources" *ngIf="state.source === 'rdcz'">
+    <div class="app-source app-source-rdcz"></div>
+    <div class="app-source app-source-vdk" *ngIf="doc.vdk?.length > 0"></div>
+    <div class="app-source app-source-czbrd" *ngIf="doc.czbrd?.length > 0"></div>
+    <div class="app-source app-source-dpz" *ngIf="doc.dpz?.length > 0"></div>
+  </div>
+  <mat-card-header>
+    <mat-card-title *ngIf="state.source === 'rdcz'">
+      <a [href]="'http://registrdigitalizace.cz/rdcz/results;collapse=id;q=' + doc.cislordcz" target="_blank" >{{ doc.title }}</a> 
+      <ng-container *ngIf="!doc.title">{{ 'desc.no_title' | translate }}</ng-container>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutGap="16px" [class.app-row-gap-16]="showingDetail || (doc.vdk?.length > 0 || doc.czbrd?.length || doc.dpz?.length)">
+      <div *ngIf="state.source === 'rdcz' && hasImg" class="app-thumb">
+        <img [src]="imgSrc" /> 
+      </div>
+      <div fxFlex class="app-metadata">
+        <div *ngIf="doc.podnazev">{{ 'fields.podnazev' | translate }}: <strong>{{ doc.podnazev }}</strong></div>
+        <div *ngIf="doc.varnazev">
+          {{ 'fields.variantni_nazev' | translate }}:
+          <ng-container *ngFor="let v of doc.varnazev; let last = last">
+            <strong>{{ v }}</strong><span *ngIf="!last" class="app-pipe"></span>
+          </ng-container>
+        </div>
+        <div *ngIf="doc.autor">{{ 'fields.autor' | translate }}: <strong>{{ doc.autor }}</strong></div>
+        <div *ngIf="doc.mistovyd">{{ 'fields.misto_vydani' | translate }}: <strong>{{ doc.mistovyd }}</strong></div>
+        <div *ngIf="doc.vydavatel">{{'fields.vydavatel' | translate }}: <strong>{{ doc.vydavatel }}</strong></div>
+        <div *ngIf="doc.rokvydstr">{{'fields.rokvyd' | translate}}: <strong>{{ doc.rokvydstr }}</strong></div>
+        <div *ngIf="doc.bibliographich_data"><a [href]="doc.bibliographich_data" target="_blank">{{ 'desc.podrobne_bibl_udaje' | translate }}</a></div>
+      </div>
+    </div>
+
+    <mat-accordion multi="true">
+      <mat-expansion-panel *ngIf="state.sources.vdk && doc.vdk?.length > 0" [expanded]="true" class="mat-elevation-z0">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            {{ 'vdk.name' | translate }}<span class="app-count"> ({{doc.vdk?.length}})</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-vdk-item *ngFor="let vdk of doc.vdk" [doc]="vdk" class="app-inner-item"></app-vdk-item>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="doc.czbrd?.length > 0 && state.sources.czbrd" [expanded]="true" class="mat-elevation-z0">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            {{ 'czbrd.name' | translate }}<span class="app-count">({{ doc.czbrd?.length }})</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-czbrd-item *ngFor="let czbrd of doc.czbrd" [doc]="czbrd" class="app-inner-item"></app-czbrd-item>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="doc.dpz?.length > 0 && state.sources.dpz" [expanded]="true" class="mat-elevation-z0">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            {{ 'dpz.name' | translate }}<span class="app-count">({{ doc.dpz?.length }})</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-dpz-item *ngFor="let dpz of doc.dpz" [doc]="dpz" class="app-inner-item"></app-dpz-item>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <div *ngIf="showingDetail">
+      <div class="app-card-border">
+        <div class="app-card-border-header">{{ 'desc.seznam_predloh' | translate }} <span class="app-count">(1)</span></div>
+        <div class="app-metadata">
+          <ng-container *ngIf="doc.stav">{{ 'fields.status' | translate }}: <strong>{{ doc.stav }}</strong></ng-container>
+          <ng-container *ngIf="doc.cislordcz"><span class="app-pipe"></span>{{ 'fields.cislordcz' | translate }}: <strong>{{ doc.cislordcz }}</strong></ng-container>
+          <ng-container *ngIf="doc.vlastnik"><span class="app-pipe"></span>{{ 'fields.vlastnik' | translate }}: <strong>{{ doc.vlastnik }}</strong></ng-container>
+          <ng-container *ngIf="doc.rozsah"><span class="app-pipe"></span>{{ 'fields.rok_rozsah' | translate }}: <strong>{{ doc.rozsah }}</strong></ng-container>
+          <ng-container *ngIf="doc.cast"><span class="app-pipe"></span>{{ 'fields.cast_rocniku' | translate }}: <strong>{{ doc.cast }}</strong></ng-container>
+          <ng-container *ngIf="doc.cisloper"><span class="app-pipe"></span>{{ 'fields.cislo' | translate }}: <strong>{{ doc.cisloper }}</strong></ng-container>
+          <ng-container *ngIf="doc.financovano"><span class="app-pipe"></span>{{ 'fields.financed' | translate }}: <strong>{{ doc.financovano }}</strong></ng-container>
+          <ng-container *ngIf="doc.signatura"><span class="app-pipe"></span>{{ 'fields.signatura' | translate }}: <strong>{{ doc.signatura }}</strong></ng-container>
+          <ng-container *ngIf="doc.carkod"><span class="app-pipe"></span>{{ 'fields.carkod'  | translate }}: <strong>{{ doc.carkod }}</strong></ng-container>
+          <ng-container *ngIf="doc.bibpoznamka"><span class="app-pipe"></span>{{ 'fields.comment'  | translate }}: <strong>{{ doc.bibpoznamka }}</strong></ng-container>
+        </div>
+      </div>
+      <div *ngIf="digObjects.length > 0" class="app-card-border">
+        <div class="app-card-border-header">{{ 'desc.digitalni_dokument' | translate }} <span class="app-count">({{ digObjects.length }})</span></div>
+        <div class="app-metadata">
+          <div *ngFor="let dobj of digObjects">
+            <a *ngIf="dobj['url'].startsWith('http')" [href]="dobj['url']" target="_blank">{{dobj['url']}}</a>
+            <span *ngIf="!dobj['url'].startsWith('http')">{{dobj['url']}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="start end">
+    <div fxFlex class="app-display-tags">
+      <span>
+        {{ 'fields.predlohy' | translate }}: <strong>{{ 1 }}</strong> 
+      </span>
+      <span *ngIf="doc.ccnb && doc.ccnb[0].startsWith('cnb')">
+        čČNB:
+        <strong>
+          <a [href]="'http://aleph.nkp.cz/F/?func=find-c&amp;local_base=nkc01&amp;ccl_term=cnb=' + doc.ccnb[0]" target="_blank">
+            {{ doc.ccnb[0] }}
+          </a>  
+        </strong>
+      </span>
+      <span *ngIf="doc.isbn">
+        ISBN:
+        <strong>
+          <a [href]="'http://aleph.nkp.cz/F/?local_base=nkc01&amp;func=find-c&amp;ccl_term=ISN=' + doc.isbn" target="_blank">
+            {{ doc.isbn }}
+          </a> 
+        </strong>
+      </span>
+      <span *ngIf="doc.issn">
+        ISSN:
+        <strong>
+          <a [href]="'http://aleph.techlib.cz/F/?func=find-b&amp;find_code=SSN&amp;local_base=STK02&amp;request=' + doc.issn" target="_blank">
+            {{ doc.issn }}
+          </a>  
+        </strong>
+      </span>
+    </div>
+    <div>
+      <button mat-flat-button (click)="showDetail()">
+        {{ showingDetail ? ('desc.hide_detail' | translate) : ('desc.show_detail' | translate) }}
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

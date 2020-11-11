@@ -1,0 +1,8 @@
+<mat-paginator class="app-clean-bg"
+  [length]="state.numFound"
+  [pageSize]="state.rows"
+  [pageIndex]="state.page"
+  [pageSizeOptions]="[10, 25, 100]"
+  (page)="onChanged($event)"
+  class="app-clean-bg">
+</mat-paginator>
