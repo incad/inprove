@@ -13,21 +13,25 @@
         </mat-card-header>
         <mat-card-content>
           <p>
-            Hlavním cílem projektu „IN-PROVE : budování INtegrovaného prostředí pro 
-            PRůzkum, Ochranu, Výzkum a Evidenci novodobých knihovních dokumentů spadajících do konzervačních sbírek“ 
-            je vybudovat nové nástroje podporující trvalé uchování novodobých tištěných knihovních fondů a integrovat 
-            je spolu s již užívanými softwarovými produkty do jednoho centrálního integrovaného prostředí, 
-            které by do budoucna zefektivnilo přístupy jednotlivých knihoven majících konzervační povinnosti 
-            (ale samozřejmě i dalších) k zachování našeho národního kulturního dědictví. 
-
-            
+            Integrované centrální vyhledávací rozhraní INPROVE je zastřešující aplikace, která poskytuje
+            ucelený přehled o datech shromážděných o jednotlivých dokumentech napříč mnoha
+            informačními zdroji relevantními pro postupy efektivní správy, ochrany a budování
+            novodobých konzervačních fondů.
           </p>
           <p>
-            Uvedené výstupy v podobě automatizovaných softwarových nástrojů jsou přitom pouze částí z aktivit, 
-            které jsou realizovány prostřednictvím výše uvedeného projektu – mimo nich se řešitelský tým bude věnovat i 
-            analýzám potřeb depozitního ukládání v ČR, sestavení podkladů pro možné vybudování metodického centra ochrany a 
-            konzervace novodobých knihovních fondů či seznámení odborné veřejnosti s tematikou trvalého uchování knižních 
-            fondů formou specializovaných seminářů.
+            Prostřednictvím centrálního vyhledávacího rozhraní INPROVE je možné komplexně
+            prohledávat datové sety, které jsou uloženy v nativních, samostatně fungujících systémech –
+            Registr digitalizace, Virtuální depozitní knihovna, Aplikace pro průzkum fondů, Databáze
+            provenienčních znaků, které jsou na sebe nezávislé. Z tohoto důvodu a díky jejich postupnému
+            vzniku netvořily tyto nástroje ucelený informační zdroj, který dokáže podat komplexní
+            informaci o stavu exempláře či jeho úrovni digitalizace.
+          </p>
+          <p>
+            To se nyní mění. Pomocí tohoto vyhledávacího rozhraní a porovnávacímu algoritmu je možné
+            poskytnout na jednom místě unikátní souhrn dat, která budou sloužit ke kvalitnímu srovnání
+            odborných pracovních postupů realizovaných na konkrétních dokumentech a statisticky
+            podloženým manažerským rozhodnutím vedoucím k trvalé ochraně bohemikálního kulturního
+            dědictví.
           </p>
         </mat-card-content>
       </mat-card>
@@ -37,8 +41,11 @@
         <mat-card fxFlex="1 1 calc(20% - 32px)" [class]="'app-source-' + source.label" class="app-card-source">
           <mat-card-header>
             <mat-card-title fxLayout="row">
-              <a fxFlex (click)="setSource(source)" >{{ source.label + '.name' | translate }}</a>
-              <a href="{{ source.url }}" title="{{ source.url }}" target="_blank" [matTooltip]="'desc.link_to_external_app' | translate"><mat-icon>launch</mat-icon></a>
+              <a fxFlex (click)="setSource(source)">{{ source.label + '.name' | translate }}</a>
+              <a href="{{ source.url }}" title="{{ source.url }}" target="_blank"
+                [matTooltip]="'desc.link_to_external_app' | translate">
+                <mat-icon>launch</mat-icon>
+              </a>
             </mat-card-title>
           </mat-card-header>
           <mat-card-actions *ngIf="source.searchable">
